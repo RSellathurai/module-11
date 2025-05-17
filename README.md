@@ -106,11 +106,11 @@ The dataset is now free of missing values and ready for EDA and modeling.
 
 ## Exploratory data analysis
 
-Lets analyze the dataset after cleanin up
+Lets analyze the dataset after cleaning up
 
 ### Distribution of car prices
 
-![care prices](images/distribution_of_car_prices.png)
+![care prices](images/price_distribution.png)
 
 - Most vehicles are priced between $5,000 and $20,000, with the peak frequency around $10,000 to $12,000.
 - The distribution is right-skewed, indicating a larger number of lower-priced vehicles and a long tail of high-priced ones.
@@ -118,14 +118,14 @@ Lets analyze the dataset after cleanin up
 - The smooth KDE line overlay confirms the unimodal shape and skewness.
 
 ### Price Vs Odometer
-![price vs odometer](images/price%20Vs%20Odometer.png)
+![price vs odometer](images/price_vs_odometer.png)
 - This chart visualizes how a vehicle's mileage affects its price:
 - There is a clear negative correlation: as mileage increases, price generally decreases.
 - Most vehicles are priced under $30,000 and have odometer readings below 200,000 miles.
 - Very few high-mileage vehicles (>400,000 miles) are listed at high prices—likely rare exceptions (e.g., commercial vehicles or luxury models).
 - The dense cluster at low mileage and low-to-mid pricing indicates the sweet spot for typical used car inventory.
 ### Price Vs Year
-![price vs year](images/priceVsImage.png)
+![price vs year](images/price_vs_year.png)
 - Newer vehicles consistently command higher prices. Median price increases steadily from older models (2001) to newer ones (2022).
 - Vehicles manufactured after 2015 show a sharper upward trend in both median price and price variability.
 - Interquartile ranges (IQRs) widen with newer models, indicating greater pricing variability—likely due to differences in model types and trim levels.
@@ -133,7 +133,7 @@ Lets analyze the dataset after cleanin up
 - Cars from 2021 and 2022 have the highest median prices, but also show more variability, possibly due to market shifts during and after the COVID-19 pandemic.
 
 ### Price by Vehicle Condition (Boxplot)
-![Price vs condition](images/pricevsCondition.png)
+![Price vs condition](images/price_by_condition.png)
 - This boxplot highlights how listed condition affects price:
 - Better condition means higher prices:
     - new and like new vehicles command the highest median and upper-range prices.
@@ -150,6 +150,86 @@ Mileage reduces price: Vehicles with higher odometer readings tend to be priced 
 
 Newer cars usually have less mileage: The negative correlation between year and odometer supports the logical trend that newer cars haven't been driven as much.
 
+## Modeling
+### Multiple regression models were developed and evaluated to predict used car prices:
+#### Model Types:
+- Linear Regression
+- Ridge Regression (with L2 regularization)
+- Lasso Regression (with L1 regularization)
+- ElasticNet (with both L1 and L2 regularization)
 
+#### Evaluation Framework:
+-  Metrics: R² (primary),RMSE, MAE
+-  Validation: 5-fold cross-validation
+-  Hyperparameter Tuning: Grid search for optimization
+
+```
+Model Performance Comparison:
+                      CV R² (mean)   Test R²    Test RMSE     Test MAE
+Linear Regression              NaN  0.665555  8289.301025  5718.269544   
+Ridge Regression          0.666278  0.665509  8289.870696  5718.537094   
+Lasso Regression          0.666274  0.665516  8289.788071  5717.990537   
+ElasticNet Regression     0.646892  0.644544  8545.724034  5878.980619   
+
+```
+
+#### Feature Importance Analysis:
+The most influential factors affecting used car prices:
+1. Vehicle Age: Newer vehicles command significantly higher prices
+2. Odometer Reading: Lower mileage vehicles are more valuable
+3. Manufacturer: Luxury brands (Mercedes-Benz, BMW, Audi) command price premiums
+4. Condition: Excellent and good condition vehicles priced higher
+
+
+
+## Findings
+
+### Business Understanding
+We set out to answer a key question for used car dealers:
+- What are the most important factors that determine used car prices, and can we build a reliable model to help with inventory decisions?
+- Our goal was to deliver clear, actionable insights to help you price, buy, and sell smarter.
+
+## Data Cleaning & Preparation
+- Removed outliers and corrected obvious errors in price, year, and odometer readings.
+- Addressed missing values and standardized data types.
+- Selected features that most impact price based on data completeness and domain relevance.
+
+---
+
+## Statistical Insights
+- **Descriptive statistics:** Most cars are from 2008–2017, with mileage typically under 135,000 miles.
+- **Brand distribution:** Ford, Chevrolet, and Toyota are the most common.
+- **Condition:** Most cars are in “good” or “excellent” shape; “salvage” and “new” are rare.
+
+---
+
+## Key Findings & Actionable Items
+
+- **Year:** Newer vehicles sell for significantly more.
+- **Odometer:** Lower mileage = higher price. Mileage is one of the top predictors.
+- **Condition:** “New” and “excellent” cars earn the best prices. “Salvage” and “unknown” fetch much less.
+- **Brand:** Luxury brands (e.g., Ferrari, Tesla) bring a premium; economy brands (e.g., Kia, Mitsubishi) are more affordable.
+
+**What should you do?**
+- **Buy smart:** Focus on newer, low-mileage, well-maintained cars.
+- **Sell smart:** Highlight the best features (condition, brand) in your ads.
+- **Price smart:** Set realistic prices for high-mileage or salvage vehicles to move them quickly.
+
+---
+
+## Model Performance
+- Our models explain about **64% of price variation**—strong for real-world data.
+- Typical prediction error is **$5,800–$8,600**, which is reasonable given the market’s unpredictability.
+- Linear, Ridge, and Lasso models all performed about the same.
+
+---
+
+## Next Steps & Recommendations
+
+- **Minor improvements:** Add more features (e.g., accident history), segment by car type, or try advanced models for even better predictions.
+- **Data quality:** Continue ensuring your inventory data is accurate and well-maintained.
+- **Ongoing analysis:** We can help break down results further by region, time, or other factors as your business grows.
+
+---
 
 
